@@ -1,8 +1,10 @@
 import { Sequelize } from "sequelize";
+import dotenv from "dotenv";
+dotenv.config();
 
 // Sequelize configuration
 const sequelize = new Sequelize(
-  "postgres://default:n2d6liKjMeTv@ep-fragrant-dawn-a4zcfi8b-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
+  process.env.POSTGRES_URL as string,
 
   {
     dialect: "postgres",

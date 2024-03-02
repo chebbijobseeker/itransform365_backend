@@ -1,16 +1,14 @@
 import Fastify from "fastify";
 
 import { JsonSchemaToTsProvider } from "@fastify/type-provider-json-schema-to-ts";
-import Register from "./controllers/UserController";
-
-import dotenv from "dotenv";
-dotenv.config();
+import { registerUser, loginUser } from "./controllers/UserController";
 
 const fastify = Fastify({
   logger: true,
 }).withTypeProvider<JsonSchemaToTsProvider>();
 
-fastify.post("/register", Register);
+fastify.post("/register", registerUser);
+fastify.post("/login", loginUser);
 
 const port = 5000;
 

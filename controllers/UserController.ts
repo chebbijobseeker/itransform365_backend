@@ -1,9 +1,9 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import { hash } from "bcrypt";
+import { compare, hash } from "bcrypt";
 import { UserModel } from "../models/User"; // Import the User model from your models file
 import { User } from "../interfaces/UserInteface";
 
-async function Register(req: FastifyRequest, reply: FastifyReply) {
+async function registerUser(req: FastifyRequest, reply: FastifyReply) {
   try {
     const { email, password, confirmPassword, fullName } = req.body as User;
 
@@ -29,4 +29,35 @@ async function Register(req: FastifyRequest, reply: FastifyReply) {
   }
 }
 
-export default Register;
+async function loginUser(req: FastifyRequest, reply: FastifyReply) {
+  try {
+    const { email, password } = req.body as { email: string; password: string };
+
+    // Validate email and password
+    if (!email || !password) {
+      return reply
+        .code(400)
+        .send({ message: "Email and password are required" });
+    }
+
+    // Check if the user exists
+    const user = await UserModel.findOne({ where: { email } });
+    if (!user) {
+      return reply.code(404).send({ message: "User not found" });
+    }
+
+    // Verify password
+    const passwordMatch = await compare(password, (user as any).password);
+    if (!passwordMatch) {
+      return reply.code(401).send({ message: "Incorrect password" });
+    }
+
+    // User authenticated successfully
+    return reply.code(200).send({ message: "Login successful", user });
+  } catch (error) {
+    console.error({ error });
+    return reply.code(500).send({ message: "Internal Server Error" });
+  }
+}
+
+export { registerUser, loginUser };
