@@ -53,10 +53,14 @@ async function loginUser(req: FastifyRequest, reply: FastifyReply) {
     }
 
     // User authenticated successfully
-    return reply.code(200).send({ message: "Login successful", user });
+    return reply
+      .code(200)
+      .send({ message: "Login successful", user, status: 200 });
   } catch (error) {
     console.error({ error });
-    return reply.code(500).send({ message: "Internal Server Error" });
+    return reply
+      .code(500)
+      .send({ message: "Internal Server Error", status: 500 });
   }
 }
 
