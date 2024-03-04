@@ -1,4 +1,6 @@
 import Fastify from "fastify";
+import dotenv from "dotenv";
+dotenv.config();
 
 import { JsonSchemaToTsProvider } from "@fastify/type-provider-json-schema-to-ts";
 import { registerUser, loginUser } from "./controllers/UserController";
