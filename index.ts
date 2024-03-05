@@ -19,7 +19,7 @@ fastify.register(cors, {
 fastify.post("/register", registerUser);
 fastify.post("/login", loginUser);
 
-const port = 5000;
+const port: number = parseInt(process.env.PORT || "5000", 10);
 
 fastify.listen({ port }, (err) => {
   if (err) {
@@ -27,3 +27,5 @@ fastify.listen({ port }, (err) => {
   }
   console.log("SERVER  IS RUNNING ON PORT", port);
 });
+
+export default fastify;

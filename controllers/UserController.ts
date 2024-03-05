@@ -10,13 +10,13 @@ const generateToken = (payload: any, expiresIn: string): string => {
 };
 
 // Function to verify JWT token
-const verifyToken = (token: string): any => {
-  try {
-    return jwt.verify(token, process.env.JWT_SECRET as string);
-  } catch (err) {
-    return null; // Token verification failed
-  }
-};
+// const verifyToken = (token: string): any => {
+//   try {
+//     return jwt.verify(token, process.env.JWT_SECRET as string);
+//   } catch (err) {
+//     return null; // Token verification failed
+//   }
+// };
 
 // Function to generate refresh token
 const generateRefreshToken = (): string => {
