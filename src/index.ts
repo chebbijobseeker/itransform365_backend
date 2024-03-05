@@ -3,7 +3,11 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import { JsonSchemaToTsProvider } from "@fastify/type-provider-json-schema-to-ts";
-import { registerUser, loginUser } from "./controllers/UserController";
+import {
+  registerUser,
+  loginUser,
+  refreshToken,
+} from "./controllers/UserController";
 import cors from "@fastify/cors";
 
 const fastify = Fastify({
@@ -18,6 +22,7 @@ fastify.register(cors, {
 
 fastify.post("/register", registerUser);
 fastify.post("/login", loginUser);
+fastify.post("refreshToken", refreshToken);
 fastify.get("/", (req, reply) => {
   reply.status(200).send({ hello: "world" });
 });

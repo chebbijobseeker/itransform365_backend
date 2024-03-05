@@ -9,7 +9,7 @@ const generateToken = (payload: any, expiresIn: string): string => {
   return jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn });
 };
 
-// Function to verify JWT token
+//Function to verify JWT token
 // const verifyToken = (token: string): any => {
 //   try {
 //     return jwt.verify(token, process.env.JWT_SECRET as string);
@@ -17,6 +17,29 @@ const generateToken = (payload: any, expiresIn: string): string => {
 //     return null; // Token verification failed
 //   }
 // };
+
+const refreshToken = (req: FastifyRequest, reply: FastifyReply) => {
+  try {
+    const { refreshToken } = req.body as { refreshToken: string };
+    // Decode the refresh token to get any necessary data
+    const decodedRefreshToken = jwt.decode(refreshToken) as {
+      [key: string]: any;
+    };
+
+    // Assuming tokenResponse contains the required data
+    reply.status(200).send({});
+
+    return reply.code(200).send({
+      message: "success",
+      accessToken: generateToken({ userId: decodedRefreshToken.userId }, "15m"),
+      accessTokenExpiry: Date.now() + 15 * 60 * 1000, // 15 minutes from now
+      refreshToken: generateRefreshToken(),
+    });
+  } catch (error) {
+    console.error({ error });
+    return reply.code(500).send({ message: "Internal Server Error" });
+  }
+};
 
 // Function to generate refresh token
 const generateRefreshToken = (): string => {
@@ -46,7 +69,7 @@ async function registerUser(req: FastifyRequest, reply: FastifyReply) {
     await UserModel.create({ email, password: hashedPassword, fullName });
 
     // Generate JWT access token
-    const accessToken = generateToken({ email }, "1h");
+    const accessToken = generateToken({ email }, "15min");
 
     // Generate refresh token
     const refreshToken = generateRefreshToken();
@@ -85,7 +108,7 @@ async function loginUser(req: FastifyRequest, reply: FastifyReply) {
     }
 
     // User authenticated successfully, generate JWT access token
-    const accessToken = generateToken({ email }, "1h");
+    const accessToken = generateToken({ email }, "15min");
 
     // Generate refresh token
     const refreshToken = generateRefreshToken();
@@ -100,4 +123,4 @@ async function loginUser(req: FastifyRequest, reply: FastifyReply) {
   }
 }
 
-export { registerUser, loginUser };
+export { registerUser, loginUser, refreshToken };
