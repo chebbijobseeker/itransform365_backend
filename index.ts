@@ -18,6 +18,9 @@ fastify.register(cors, {
 
 fastify.post("/register", registerUser);
 fastify.post("/login", loginUser);
+fastify.get("/", (req, reply) => {
+  reply.status(200).send({ hello: "world" });
+});
 
 const port: number = parseInt(process.env.PORT || "5000", 10);
 
