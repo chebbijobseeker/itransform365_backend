@@ -71,7 +71,7 @@ async function loginUser(req: FastifyRequest, reply: FastifyReply) {
         .code(400)
         .send({ message: "Email and password are required" });
     }
-
+    //
     // Check if the user exists
     const user = await UserModel.findOne({ where: { email } });
     if (!user) {
