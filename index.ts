@@ -30,5 +30,6 @@ fastify.listen({ port }, (err) => {
   }
   console.log("SERVER  IS RUNNING ON PORT", port);
 });
+// test
 
 export default fastify;
