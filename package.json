@@ -8,7 +8,8 @@
   },
   "scripts": {
     "start": "ts-node src/index.ts",
-    "vercel-build": "echo hello"
+    "vercel-build": "echo hello",
+    "migrate": "env-cmd npx sequilize db:migrate  "
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +20,7 @@
     "@vercel/postgres": "^0.7.2",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
+    "env-cmd": "^10.1.0",
     "fastify": "^4.26.1",
     "fastify-cors": "^6.1.0",
     "jsonwebtoken": "^9.0.2",

@@ -51,10 +51,11 @@ const generateRefreshToken = (): string => {
 // Register user route
 async function registerUser(req: FastifyRequest, reply: FastifyReply) {
   try {
-    const { email, password, confirmPassword, fullName } = req.body as User;
+    const { email, password, confirmPassword, fullName, phoneNumber } =
+      req.body as User;
 
-    // Validate email and password
-    if (!email || !password || !confirmPassword || !fullName) {
+    // Validate email, password, and other required fields
+    if (!email || !password || !confirmPassword || !fullName || !phoneNumber) {
       return reply.code(400).send({ message: "All fields are required" });
     }
 
@@ -65,8 +66,13 @@ async function registerUser(req: FastifyRequest, reply: FastifyReply) {
     // Hash the password
     const hashedPassword = await hash(password, 10);
 
-    // Create user
-    await UserModel.create({ email, password: hashedPassword, fullName });
+    // Create user with phone number
+    await UserModel.create({
+      email,
+      password: hashedPassword,
+      fullName,
+      phoneNumber,
+    });
 
     // Generate JWT access token
     const accessToken = generateToken({ email }, "15min");

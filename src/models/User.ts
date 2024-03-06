@@ -17,8 +17,14 @@ const UserModel = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    phoneNumber: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
-  { timestamps: false }
+  {
+    timestamps: false,
+  }
 );
 
 export { UserModel };
