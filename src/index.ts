@@ -23,7 +23,7 @@ fastify.register(cors, {
 fastify.post("/register", registerUser);
 fastify.post("/login", loginUser);
 fastify.post("/refreshToken", refreshToken);
-fastify.get("/", (req, reply) => {
+fastify.get("/test", (req, reply) => {
   reply.status(200).send({ hello: "world" });
 });
 
