@@ -7,7 +7,8 @@
     "node": "18.x"
   },
   "scripts": {
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "vercel-build": "echo hello"
   },
   "author": "",
   "license": "ISC",
