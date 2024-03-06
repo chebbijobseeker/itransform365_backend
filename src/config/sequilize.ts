@@ -8,7 +8,7 @@ const sequelize = new Sequelize(
 
   {
     dialect: "postgres",
-    dialectModule: pg,
+    dialectModulePath: require.resolve("pg"),
   }
 );
 
